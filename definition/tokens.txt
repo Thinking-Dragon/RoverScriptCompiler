@@ -1,0 +1,94 @@
+# Special Variables
+ACTION_STACK : "actionStack"
+
+# Types of structures
+STRATEGY     : "strategy"
+ACTION       : "action"
+TRIGGER      : "trigger"
+MODEL        : "model"
+ENUM         : "enum"
+
+# Sections shared by strategies and actions
+START        : "start"
+LOOP         : "loop"
+DATA         : "data"
+
+# Sections for strategies
+TRIGGERS     : "triggers"
+
+# Primitive data Types
+T_INTEGER    : "int"
+T_LONG       : "long"
+T_FLOAT      : "float"
+T_DOUBLE     : "double"
+T_BOOLEAN    : "bool"
+T_STRING     : "string"
+T_TIMER      : "Timer"
+
+# Litterals
+L_INTEGER    : (1-9)[0-9]*
+L_LONG       : L_INTEGER
+L_FLOAT      : L_INTEGER DOT L_INTEGER
+L_DOUBLE     : L_FLOAT
+L_BOOLEAN    : (TRUE|FALSE)
+L_TRUE       : TRUE
+L_FALSE      : FALSE
+L_STRING     : QUOTE (ALPHANUMERIC)* QUOTE
+L_TIMER      : 
+
+# Control structures
+IF           : "if"
+ELSE         : "else"
+DO           : "do"
+WHILE        : "while"
+FOR          : "for"
+
+# Variables
+SYMBOL       : [_|a-z|A-Z|0-9](ALPHANUMERIC)*
+
+# Operators
+
+## Compare
+EQUALS       : "=="
+GREATER      : ">"
+LESS         : "<"
+GREATER_EQ   : ">="
+LESS_EQ      : "<="
+
+## Set value
+ASSIGN       : "="
+ARROW        : "->"
+
+## Logic
+AND          : "&&"
+OR           : "||"
+XOR          : "^"
+NOT          : "!"
+
+## Bitwise logic
+L_SHIFT      : "<<"
+R_SHIFT      : ">>"
+BIT_AND      : "&"
+BIT_OR       : "|"
+
+## Arithmetic
+ADD          : "+"
+SUB          : "-"
+MUL          : "*"
+DIV          : "/"
+MOD          : "%"
+
+## Separators
+DOT          : "."
+COMMA        : ","
+QUOTE        : "\""
+DOUBLE_SLASH : "//"
+
+# Call
+L_PAREN      : "("
+R_PAREN      : ")"
+
+# Scope
+L_BRACE      : "{"
+R_BRACE      : "}"
+

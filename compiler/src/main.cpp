@@ -9,6 +9,9 @@
 #include "RoverScriptCompiler/token/tokens.h"
 #include "RoverScriptCompiler/tokenizer/tokenizer.h"
 
+#include "RoverScriptCompiler/ast/ast_nodes.h"
+#include "RoverScriptCompiler/parser/parser.h"
+
 std::string loadFile(const std::string& fileName) {
     std::ifstream stream(fileName);
     std::stringstream buffer;
@@ -27,6 +30,9 @@ int main(int argc, char **argv) {
 
     Tokenizer tokenizer;
     std::vector<std::shared_ptr<Token>> tokens = tokenizer.tokenize(sourceCode);
+
+    Parser parser;
+    std::shared_ptr<AstNode> ast = parser.parse(tokens);
 
     return 0;
 }

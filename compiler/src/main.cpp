@@ -6,6 +6,9 @@
 #include <string>
 #include "sstream"
 
+#include "RoverScriptCompiler/token/tokens.h"
+#include "RoverScriptCompiler/tokenizer/tokenizer.h"
+
 std::string loadFile(const std::string& fileName) {
     std::ifstream stream(fileName);
     std::stringstream buffer;
@@ -22,7 +25,8 @@ int main(int argc, char **argv) {
     std::string fileName = *(argv + 1);
     std::string sourceCode = loadFile(fileName);
 
-    // TODO: tokenize, parse and output compiled code
+    Tokenizer tokenizer;
+    std::vector<std::shared_ptr<Token>> tokens = tokenizer.tokenize(sourceCode);
 
     return 0;
 }

@@ -1,0 +1,51 @@
+action RotateToAngle(double targetAngle) { ... }
+
+enum State { STOPPED, AVOIDING_OBSTACLE, SEEKING, CLOSING }
+
+strategy GotoGPSAction(GPSFix targetLocation) {
+    data {
+        State state = SEEKING
+        double distanceThreshold = 0.01
+        double timeToTarget = 10000.0 // ms
+    }
+
+    triggers {
+        DetectWallTrigger -> {
+            data.state = AVOIDING_OBSTACLE
+        },
+        DetectNoWallTrigger -> {
+            data.state = SEEKING
+        }
+    }
+
+    loop {
+        switch(data.state) {
+            case SEEKING {               
+                double latitude = targetLocation.latitude - perception.gps.latitude
+                double longitude = targetLocation.longitude - perception.gps.longitude
+
+                double distanceToTarget = sqrt(pow(latitude, 2) + pow(longitude, 2))
+
+                if(distanceToTarget < data.distanceThreshold) {
+                    data.state = CLOSING
+                }
+                else {
+                    double wantedAngle = arctan2(longitude, latitude)
+                    double forwardMovementDuration = distanceToTarget / data.timeToTarget
+                    
+                    actionStack.push(RotateToAngle(targetAngle))
+                    actionStack.push(MoveForDurationAction(linearVelocity=2.0, angularVelocity=0.0, timeout=forwardMovementDuration))
+                }
+            },
+            case CLOSING {
+                actionStack.push(MoveForDurationAction(linearVelocity=2.0, angularVelocity=0.0, timeout=2000))
+            },
+            case AVOIDING_OBSTACLE {
+
+            },
+            case STOPPED {
+                actionStack.push(MoveForDurationAction(linearVelocity=0.0, angularVelocity=0.0, timeout=2000))
+            }
+        }
+    }
+}

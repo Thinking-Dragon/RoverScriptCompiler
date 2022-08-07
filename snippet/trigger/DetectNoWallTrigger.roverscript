@@ -1,0 +1,5 @@
+trigger DetectNoWallTrigger {
+    if(!sensors.wallSensor.value) {
+        trigger()
+    }
+}

@@ -1,0 +1,35 @@
+// Author: Clément Gassmann-Prince (GitHub: Thinking-Dragon)
+
+enum LineFollowState { FOLLOWING, STOPPED }
+
+strategy FollowLineStrategy {
+    data {
+        LineFollowState state = FOLLOWING
+    }
+
+    triggers {
+        DetectWallTrigger -> {
+            LineFollowState = STOPPED
+        },
+        DetectNoWallTrigger -> {
+            LineFollowState = FOLLOWING
+        }
+    }
+
+    loop {
+        if(data.state == FOLLOWING) {
+            bool isLineLeft = sensors.leftLineSensor.value
+            bool isLineRight = sensors.rightLineSensor.value
+
+            if(isLineLeft && !isLineRight) {
+                actionStack.push(MoveForDurationAction(linearVelocity=2.0, angularVelocity=-2.0, timeout=2000))
+            }
+            if(!isLineLeft && isLineRight) {
+                actionStack.push(MoveForDurationAction(linearVelocity=2.0, angularVelocity=2.0, timeout=2000))
+            }
+            else {
+                actionStack.push(MoveForDurationAction(linearVelocity=2.0, angularVelocity=0.0, timeout=2000))
+            }
+        }
+    }
+}

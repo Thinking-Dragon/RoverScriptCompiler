@@ -1,0 +1,17 @@
+action MoveForDurationAction(double linearVelocity, double angularVelocity, TimeSpan targetDuration) {
+    data {
+        Timer timer
+    }
+
+    start {
+        data.timer.start()
+        control.move(linearVelocity=linearVelocity, angularVelocity=angularVelocity)
+    }
+
+    loop {
+        if(data.timer.duration() > targetDuration) {
+            control.stop()
+            resolve()
+        }
+    }
+}

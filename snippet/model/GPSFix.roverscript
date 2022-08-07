@@ -1,0 +1,5 @@
+model GPSFix {
+    double latitude
+    double longiture
+    double altitude
+}

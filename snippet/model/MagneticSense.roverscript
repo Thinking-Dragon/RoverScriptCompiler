@@ -1,0 +1,5 @@
+model MagneticSense {
+    double x
+    double y
+    double z
+}

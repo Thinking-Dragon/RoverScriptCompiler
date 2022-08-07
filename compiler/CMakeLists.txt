@@ -12,4 +12,5 @@ include_directories(
 
 add_executable(
     rsc
+    src/main.cpp
 )

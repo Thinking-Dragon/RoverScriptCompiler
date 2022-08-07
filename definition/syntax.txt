@@ -1,0 +1,43 @@
+document → (strategy | action | trigger | model | enum)*
+
+strategy → STRATEGY SYMBOL [parameters] (scope | strategy_body)
+action → ACTION SYMBOL 
+
+enum → ENUM SYMBOL enum_body
+enum_body → L_BRACE [SYMBOL](COMMA SYMBOL)* R_BRACE
+
+parameters → L_PAREN [parameters_var](COMMA parameters_var)* R_PAREN
+parameters_var → type SYMBOL
+
+strategy_body → L_BRACE (loop)* R_BRACE
+
+loop → LOOP scope
+start → START scope
+triggers → TRIGGERS trigger_map
+data → DATA data_map
+
+scope → L_BRACE (statement)* R_BRACE
+
+trigger_map → L_BRACE [trigger_pair](COMMA trigger_pair)* R_BRACE
+trigger_pair → SYMBOL SUB GREATER L_BRACE scope
+
+data_map → L_BRACE (symbol_definition)* R_BRACE
+symbol_definition → type SYMBOL ASSIGN SYMBOL
+
+type → T_INTEGER | T_LONG | T_FLOAT | T_DOUBLE | T_BOOLEAN | T_STRING | T_TIMER
+
+statement → comment | assign_statement | expression
+assign_statement → SYMBOL ASSIGN expression
+initialize_statement → type SYMBOL ASSIGN expression
+
+expression → var_reference | operation
+
+var_reference → SYMBOL
+operation → add_operation | sub_operation | mul_operation | div_operation | mod_operation
+add_operation → expression ADD expression
+sub_operation → expression SUB expression
+mul_operation → expression MUL expression
+div_operation → expression DIV expression
+mod_operation → expression MOD expression
+
+comment → DOUBLE_SLASH (ALPHANUMERIC)*

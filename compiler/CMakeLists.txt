@@ -14,4 +14,6 @@ add_executable(
     rsc
     src/main.cpp
     src/tokenizer/tokenizer.cpp
+    src/parser/parser.cpp
+    src/parser/parseContext.cpp
 )
